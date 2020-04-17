@@ -56,7 +56,7 @@ public class Dialer extends AppCompatActivity implements View.OnClickListener {
                     String str = getNumbers;
                     putNumberToEditText(removeLastCharacter(str));
                 }
-                
+
             }
         });
 
