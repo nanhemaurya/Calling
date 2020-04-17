@@ -31,6 +31,7 @@ public class Dialer extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout call_btn;
     public SipAudioCall call = null;
     public SipManager manager = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,19 +51,22 @@ public class Dialer extends AppCompatActivity implements View.OnClickListener {
 
         edit_back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {putNumberToEditText(removeLastCharacter(getNumbers));}
+            public void onClick(View v) {
+                String str = getNumbers;
+                putNumberToEditText(removeLastCharacter(str));
+            }
         });
 
         call_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // MainActivity mainActivity = (MainActivity) context;
+                // MainActivity mainActivity = (MainActivity) context;
                 String username = SharedPrefs.getPrefs(context, Constt.CALLER_USERNAME);
-                String password = SharedPrefs.getPrefs(context,Constt.CALLER_PASSWORD);
-                SipProfile sipProfile = SipCallMethods.sipProfile(username,password);
+                String password = SharedPrefs.getPrefs(context, Constt.CALLER_PASSWORD);
+                SipProfile sipProfile = SipCallMethods.sipProfile(username, password);
                 String sipAddress = SipCallMethods.sipAddress(getNumber());
-                if(!getNumber().isEmpty()){
-                    SipCallMethods.initiateCall(context,sipProfile,sipAddress);
+                if (!getNumber().isEmpty()) {
+                    SipCallMethods.initiateCall(context, sipProfile, sipAddress);
                 }
 
                 System.out.println(sipAddress);
@@ -174,74 +178,13 @@ public class Dialer extends AppCompatActivity implements View.OnClickListener {
 
 
     private String removeLastCharacter(String str) {
-        if (str != null && str.length() > 0 && str.charAt(str.length() - 1) == 'x') {
-            str = str.substring(0, str.length() - 1);
-        }
-        return str;
+        return str.substring(0, str.length() - 1);
     }
 
 
     private String getNumber() {
         return getNumbers;
     }
-
-
-    public void initiateCall(Context context,SipProfile sipProfile, String sipAddress) {
-
-        //  updateStatus(sipAddress);
-        //SipAudioCall call;
-        CallUI callUI = (CallUI) context.getApplicationContext();
-//        SipAudioCall call = callUI.call;
-//        SipManager manager = callUI.manager;
-
-        try {
-            SipAudioCall.Listener listener = new SipAudioCall.Listener() {
-                // Much of the client's interaction with the SIP Stack will
-                // happen via listeners.  Even making an outgoing call, don't
-                // forget to set up a listener to set things up once the call is established.
-                @Override
-                public void onCallEstablished(SipAudioCall call) {
-                    call.startAudio();
-                    call.setSpeakerMode(true);
-                    call.toggleMute();
-                    //   updateStatus(call);
-                }
-
-                @Override
-                public void onCallEnded(SipAudioCall call) {
-                    //    updateStatus("Ready.");
-                }
-            };
-
-
-
-            call = manager.makeAudioCall(sipProfile.getUriString(), sipAddress, listener, 30);
-            callUI.call = call;
-            Intent startCall = new Intent(context, CallUI.class);
-            startCall.putExtra(Constt.CALL_TYPE,Constt.CALL_TYPE_DIAL);
-            context.startActivity(startCall);
-        }
-        catch (Exception e) {
-            // Log.i("WalkieTalkieActivity/InitiateCall", "Error when trying to close manager.", e);
-
-            System.out.println("InitiateCall ---- "+ e.getMessage());
-
-            if (sipProfile != null) {
-                try {
-                    manager.close(sipProfile.getUriString());
-                } catch (Exception ee) {
-//                    Log.i("WalkieTalkieActivity/InitiateCall","Error when trying to close manager.", ee);
-//                    ee.printStackTrace();
-                    System.out.println("InitiateCallxx ---- "+ ee.getMessage());
-
-                }
-            }
-            if (call != null) {
-                call.close();
-            }
-        }
-    }
-
 
 
 }
