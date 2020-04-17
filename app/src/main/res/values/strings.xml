@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Calling</string>
+    <string name="caller_name">SNMBoy</string>
+    <string name="calling_time">Incoming Call</string>
+
+    <string name="contactAddress">SIP Address to contact</string>
+    <string name="talk">Talk</string>
+
+</resources>

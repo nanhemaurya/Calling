@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <RelativeLayout android:padding="12dp"
+        android:id="@+id/mainlayout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/sipLabel"
+            android:layout_width="114dp"
+            android:layout_height="219dp"
+            android:text="sdc"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ToggleButton
+            android:id="@+id/pushToTalk"
+            android:layout_width="193dp"
+            android:layout_height="123dp"
+
+            android:layout_centerVertical="true"
+            android:layout_marginTop="-20dp"
+            android:background="@drawable/btn_record"
+            android:text="@+string/talk"
+            android:textOff=""
+            android:textOn="" />
+
+    </RelativeLayout>
+</FrameLayout>
