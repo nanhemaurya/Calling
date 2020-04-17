@@ -52,8 +52,11 @@ public class Dialer extends AppCompatActivity implements View.OnClickListener {
         edit_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = getNumbers;
-                putNumberToEditText(removeLastCharacter(str));
+                if(getNumbers != null && !getNumbers.isEmpty()){
+                    String str = getNumbers;
+                    putNumberToEditText(removeLastCharacter(str));
+                }
+                
             }
         });
 
